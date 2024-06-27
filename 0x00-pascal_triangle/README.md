@@ -1,5 +1,5 @@
 # Project: 0x00. Pascal's Triangle
-
+![image](https://github.com/Charles130-Anderson/alx-interview/assets/138807102/6258de71-b2dc-450b-9b67-a409188b9311)
 ## Overview
 
 This Python module implements a function to generate Pascal's Triangle up to the nth row. Pascal's Triangle is a mathematical concept where each number in the triangle is the sum of the two numbers directly above it.
