@@ -1,4 +1,8 @@
 # 0x01. Lockboxes
+
+![image](https://github.com/Charles130-Anderson/alx-interview/assets/138807102/f12486b9-b6c5-4a6f-8921-f162dcc6495c)
+
+
 ## Algorithm
 ## Python
 **Weight**: 1  
