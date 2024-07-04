@@ -1,6 +1,6 @@
 # 0x01. Lockboxes
 
-![I Love Boxes](https://tenor.com/view/i-love-boxes-boxes-gif-5935398)
+![GIF](https://tenor.com/view/i-love-boxes-boxes-gif-5935398.gif)
 
 ## Algorithm
 ## Python
