@@ -17,6 +17,7 @@ status_code_counts = {
     '500': 0
 }
 
+
 def print_metrics():
     """Prints the computed metrics."""
     print(f"File size: {total_file_size}")
