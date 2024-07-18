@@ -1,54 +1,70 @@
 #!/usr/bin/python3
+"""
+Script that reads stdin line by line and computes metrics.
+"""
+
 import sys
 import signal
 from collections import defaultdict
 
-# Initialize metrics variables
-total_size = 0
-status_codes = defaultdict(int)
-line_count = 0
+# Initialize variables for tracking metrics
+total_file_size = 0
+status_codes_count = defaultdict(int)
+lines_processed = 0
 
 
-def print_stats_and_exit(signum, frame):
+def print_and_reset_stats():
     """
-    Prints current stats and exits gracefully.
-    Handles SIGINT by printing statistics collected so far,
-    then terminates the script execution.
+    Prints current statistics and resets line counter.
+    Outputs the total file size and counts of each status code,
+    then resets the lines_processed counter for the next batch.
     """
-    print(f"File size: {total_size}")
-    for status_code in sorted(status_codes.keys()):
-        print(f"{status_code}: {status_codes[status_code]}")
+    print(f"File size: {total_file_size}")
+    for status_code in sorted(status_codes_count.keys()):
+        print(f"{status_code}: {status_codes_count[status_code]}")
+    # Reset line counter for next batch of lines
+    global lines_processed
+    lines_processed = 0
+
+
+def handle_interrupt(signum, frame):
+    """
+    Handles keyboard interruption by printing current stats.
+    Captures SIGINT to output current statistics before exiting.
+    """
+    print_and_reset_stats()
     sys.exit(0)
 
 
-# Register signal handler for keyboard interruption
-signal.signal(signal.SIGINT, print_stats_and_exit)
+# Register signal handler for graceful exit on CTRL+C
+signal.signal(signal.SIGINT, handle_interrupt)
 
-for line in sys.stdin:
-    # Increment line count for each input line
-    line_count += 1
+try:
+    for line in sys.stdin:
+        lines_processed += 1
 
-    # Split line into parts based on spaces
-    parts = line.split()
+        # Parse log entry based on expected format
+        try:
+            _, _, _, method, status_code, file_size = line.rsplit(' ', 4)
+            status_code = int(status_code)
+            file_size = int(file_size.strip())
 
-    # Check if line format matches expected structure
-    if len(parts) != 7:
-        continue
+            # Update metrics
+            total_file_size += file_size
+            status_codes_count[str(status_code)] += 1
 
-    try:
-        # Extract file size and status code from line parts
-        file_size = int(parts[6])
-        status_code = int(parts[5])
-    except ValueError:
-        continue  # Skip lines with invalid numbers
+        except ValueError:
+            # Skip lines that don't match expected format
+            continue
 
-    # Update total file size and status codes count
-    total_size += file_size
-    status_codes[status_code] += 1
+        # Print statistics every 10 lines
+        if lines_processed % 10 == 0:
+            print_and_reset_stats()
 
-    # Print statistics every 10 lines
-    if line_count % 10 == 0:
-        print_stats_and_exit(None, None)
+except Exception as e:
+    # Handle unexpected errors gracefully
+    print(f"An error occurred: {e}")
 
-# Print final statistics if script completes normally
-print_stats_and_exit(None, None)
+finally:
+    # Ensure final statistics are printed before script exits
+    print_and_reset_stats()
