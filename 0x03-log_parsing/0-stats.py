@@ -24,6 +24,7 @@ def print_metrics():
         if status_code_counts[code] > 0:
             print(f"{code}: {status_code_counts[code]}")
 
+
 try:
     for line in sys.stdin:
         # Split the line to extract components
