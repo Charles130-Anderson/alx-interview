@@ -12,7 +12,7 @@ const filmURL = `https://swapi-api.hbtn.io/api/films/${movieId}/`;
  * Fetch and print characters
  * of a given Star Wars film
  */
-async function fetchAndPrintCharacters() {
+async function fetchAndPrintCharacters () {
   request(filmURL, async (err, res, body) => {
     if (err) {
       console.error(err);
