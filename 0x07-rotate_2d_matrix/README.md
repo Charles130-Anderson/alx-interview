@@ -52,7 +52,7 @@ By understanding these concepts and utilizing the provided resources, you will b
 
 - [Mock Technical Interview](https://www.youtube.com/watch?v=yM9Xbi-MigE)
 
-$$ Requirements
+## Requirements
 General
 - Allowed editors: vi, vim, emacs
 - All your files will be interpreted/compiled on Ubuntu 20.04 LTS using python3 (version 3.8.10)
