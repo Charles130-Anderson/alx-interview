@@ -19,20 +19,18 @@ def makeChange(coins, total):
         given total, or -1 if not
         possible.
     """
-    if total <= 0:
+    temp_value = 0
+    coins.sort(reverse=True)
+
+    if total < 0:
         return 0
-    # Sort coins in descending order
-    coins.sort(reverse=Tue)
-    num_coins = 0
+
     for coin in coins:
-        if total == 0:
-            break
-        # Add maximum coins of this
-        # denomination to num_coins
-        if coin <= total:
-            num_coins += total // coin
-            total %= coin
-    return num_coins if total == 0 else -1
+        if total % coin <= total:
+            temp_value += total // coin
+            total = total % coin
+
+    return temp_value if total == 0 else -1
 
 
 if __name__ == "__main__":
